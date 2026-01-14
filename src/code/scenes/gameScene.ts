@@ -1,11 +1,13 @@
 import { Container, Assets, Texture, Sprite } from "pixi.js";
 import { IScene } from "../common/IScene";
-import { Spine } from "@esotericsoftware/spine-pixi-v7";
-import { Manager } from "../common/manager";
+import { Manager } from "../common/Manager";
 import { Controller } from "../components/Controller";
+import FlappyPlane from "../components/FlappyPlane";
 
 
 export class GameScene extends Container implements IScene {
+    private controller: Controller;
+    private player: FlappyPlane;
     constructor(){
         super();
         this.createGame();
@@ -20,25 +22,22 @@ export class GameScene extends Container implements IScene {
         const ids = Object.keys(testBundle);
         const assets = ids.map((id) => testBundle[id] as Texture);
 
-        const controller = new Controller();
+        this.player = new FlappyPlane({
+            skeleton: 'spineSkeleton',
+            atlas: 'spineAtlas',
+        });
+        this.controller = new Controller(this.player);
 
         var testSprite = new Sprite(assets[0]);
         this.addChild(testSprite);
 
-        var spine = Spine.from({
-            skeleton: 'spineSkeleton',
-            atlas: 'spineAtlas',
-        });
-        this.addChild(spine);
+        this.addChild(this.player);
 
-        spine.position.x = (Manager.Width / 2) + (spine.width / 2);
-        spine.position.y = (Manager.Height / 2) + (spine.height / 2);
-
-        spine.state.data.defaultMix = 0.2;
-        spine.state.setAnimation(0, "up", true);
-        spine.state.addAnimation(0, "side", true, 2);
+        this.player.position.x = (Manager.Width / 2) + (this.player.width / 2);
+        this.player.position.y = (Manager.Height / 2) + (this.player.height / 2);
     }
 
     public update(delta: number): void {
+        this.player?.update(delta);
     }
 }
