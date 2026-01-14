@@ -1,0 +1,211 @@
+{
+"skeleton": {
+	"hash": "GtovpyoP9xQ",
+	"spine": "4.2.43",
+	"x": -148,
+	"y": -118.76,
+	"width": 227.67,
+	"height": 192.99,
+	"fps": 60,
+	"images": "../../../assetsEN/",
+	"audio": "./audio"
+},
+"bones": [
+	{ "name": "root" },
+	{ "name": "controlBone", "parent": "root", "length": 51.72, "rotation": -139.01, "x": 76.81, "y": 72.22 },
+	{ "name": "wingL", "parent": "controlBone", "rotation": -18.32, "x": 101.56, "y": -33.94 },
+	{ "name": "wingR", "parent": "controlBone", "rotation": 30.01, "x": 82.74, "y": 37.09 },
+	{
+		"name": "wingROuter",
+		"parent": "wingR",
+		"rotation": 7.55,
+		"x": -0.26,
+		"y": 24.47,
+		"color": "bd3358ff",
+		"icon": "arrowUp"
+	},
+	{
+		"name": "wingRInner",
+		"parent": "wingR",
+		"rotation": -20.48,
+		"x": -5.55,
+		"y": -31,
+		"color": "bd3358ff",
+		"icon": "arrowDown"
+	},
+	{
+		"name": "wingLInner",
+		"parent": "wingL",
+		"rotation": -164.65,
+		"x": -7.3,
+		"y": 18.88,
+		"color": "5969c6ff",
+		"icon": "arrowDown"
+	},
+	{
+		"name": "wingLOuter",
+		"parent": "wingL",
+		"rotation": 2,
+		"x": 3.2,
+		"y": -17.99,
+		"color": "5969c6ff",
+		"icon": "arrowDown"
+	},
+	{ "name": "mid", "parent": "controlBone", "rotation": 90.88, "x": 146.68, "y": 0.48, "icon": "romanI" }
+],
+"slots": [
+	{ "name": "paperplaneWingL", "bone": "wingL", "attachment": "paperplaneWingL" },
+	{ "name": "paperplaneMid1", "bone": "mid", "attachment": "paperplaneMid1" },
+	{ "name": "paperplaneMid2", "bone": "mid", "attachment": "paperplaneMid2" },
+	{ "name": "paperplaneWingR", "bone": "wingR", "attachment": "paperplaneWingR" }
+],
+"skins": [
+	{
+		"name": "default",
+		"attachments": {
+			"paperplaneMid1": {
+				"paperplaneMid1": {
+					"type": "mesh",
+					"uvs": [ 0, 0.7599, 0.05668, 1, 1, 0, 0.96807, 0.00932 ],
+					"triangles": [ 1, 3, 2, 1, 0, 3 ],
+					"vertices": [ 1, 6, -100.73, 5.54, 1, 1, 8, 2.09, -67.72, 1, 1, 1, 1.31, 1.54, 1, 1, 1, 1.31, -0.5, 1 ],
+					"hull": 4,
+					"edges": [ 0, 2, 4, 6, 0, 6, 2, 4 ],
+					"width": 167,
+					"height": 140
+				}
+			},
+			"paperplaneMid2": {
+				"paperplaneMid2": {
+					"type": "mesh",
+					"uvs": [ 0.00574, 0.95538, 0.98501, 0, 1, 0.05793, 0.27916, 0.86379 ],
+					"triangles": [ 3, 1, 2, 1, 3, 0 ],
+					"vertices": [ 1, 8, 0.93, -67.65, 1, 1, 1, -0.59, 1.06, 1, 1, 1, 1.08, 3, 1, 1, 5, 89, -7.27, 1 ],
+					"hull": 4,
+					"edges": [ 0, 2, 2, 4, 4, 6, 6, 0 ],
+					"width": 161,
+					"height": 139
+				}
+			},
+			"paperplaneWingL": {
+				"paperplaneWingL": {
+					"type": "mesh",
+					"uvs": [ 0.25843, 1, 0, 0.50236, 0.96758, 0, 1, 0 ],
+					"triangles": [ 0, 2, 3, 0, 1, 2 ],
+					"vertices": [ 1, 6, -101.53, 2.04, 1, 1, 7, 118.65, -19.62, 1, 1, 2, -103.9, -3.21, 1, 1, 2, -107.36, 0.25, 1 ],
+					"hull": 4,
+					"edges": [ 0, 2, 2, 4, 4, 6, 6, 0 ],
+					"width": 227,
+					"height": 119
+				}
+			},
+			"paperplaneWingR": {
+				"paperplaneWingR": {
+					"type": "mesh",
+					"uvs": [ 0.96442, 0, 0, 0.6901, 0.72446, 1, 1, 0 ],
+					"triangles": [ 2, 0, 3, 2, 1, 0 ],
+					"vertices": [ 1, 3, -89.61, 7.49, 1, 1, 5, 91.08, -8.55, 1, 1, 4, 102.73, 1.53, 1, 1, 3, -91.15, 11.96, 1 ],
+					"hull": 4,
+					"edges": [ 0, 2, 2, 4, 4, 6, 0, 6 ],
+					"width": 133,
+					"height": 191
+				}
+			}
+		}
+	}
+],
+"animations": {
+	"init": {
+		"bones": {
+			"controlBone": {
+				"rotate": [
+					{ "value": -41.04 }
+				],
+				"translate": [
+					{ "x": 28.97, "y": -71.27 }
+				]
+			}
+		}
+	},
+	"side": {
+		"bones": {
+			"mid": {
+				"translate": [
+					{ "x": -14.42, "y": 35.68 }
+				]
+			},
+			"wingRInner": {
+				"translate": [
+					{ "x": 6.1, "y": -26.26 }
+				]
+			},
+			"wingROuter": {
+				"translate": [
+					{ "x": 0.33, "y": -111.71 }
+				]
+			},
+			"wingLOuter": {
+				"translate": [
+					{ "x": -26.18, "y": 68.91 }
+				]
+			},
+			"wingLInner": {
+				"translate": [
+					{ "x": -2.87, "y": 14.65 }
+				]
+			},
+			"controlBone": {
+				"rotate": [
+					{ "value": -38.08 }
+				],
+				"translate": [
+					{ "x": 32.45, "y": -70.69 }
+				]
+			}
+		}
+	},
+	"up": {
+		"bones": {
+			"wingLInner": {
+				"translate": [
+					{ "x": -24.91, "y": 0.74 }
+				]
+			},
+			"wingRInner": {
+				"translate": [
+					{ "x": -21.63, "y": -5.87 }
+				]
+			},
+			"mid": {
+				"translate": [
+					{ "x": -36.08, "y": -6.24 }
+				]
+			},
+			"wingROuter": {
+				"rotate": [
+					{ "value": 10.67 }
+				],
+				"translate": [
+					{ "x": -37.41, "y": -37.93 }
+				]
+			},
+			"wingLOuter": {
+				"rotate": [
+					{ "value": 6.81 }
+				],
+				"translate": [
+					{ "x": -16.45, "y": 27.56 }
+				]
+			},
+			"controlBone": {
+				"rotate": [
+					{ "value": -39.48 }
+				],
+				"translate": [
+					{ "x": 20.28, "y": -74.17 }
+				]
+			}
+		}
+	}
+}
+}

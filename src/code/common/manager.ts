@@ -28,6 +28,7 @@ export class Manager {
             autoDensity: true,
             backgroundColor: backgroundColor,
         });
+        (globalThis as any).__PIXI_APP__ = Manager.app;
 
         Manager.app.ticker.add(Manager.update);
         window.addEventListener("resize", Manager.resize);

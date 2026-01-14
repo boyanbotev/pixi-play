@@ -2,7 +2,7 @@ import { Container, Graphics, Assets } from "pixi.js";
 import { Manager } from "../common/manager";
 import { IScene } from "../common/IScene";
 import { manifest } from "../assets";
-import { GameScene } from "./gameScene";
+import { GameScene } from "./GameScene";
 
 export class LoaderScene extends Container implements IScene {
 
@@ -44,7 +44,7 @@ export class LoaderScene extends Container implements IScene {
 
         const bundleIds = manifest.bundles.map((bundle) => bundle.name);
 
-        await Assets.loadBundle(bundleIds, this.downloadProgress.bind(this));
+        //await Assets.loadBundle(bundleIds, this.downloadProgress.bind(this));
     }
 
     private downloadProgress(progress: number): void {

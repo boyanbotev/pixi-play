@@ -6,6 +6,8 @@ export const manifest: ResolverManifest = {
             name: "testBundle",
             assets: {
                 "test": "assets/images/test.jpg",
+                'spineSkeleton': "assets/spine/paperplane.json",
+                'spineAtlas': "assets/spine/paperplane.atlas"
             }
         },
     ]
