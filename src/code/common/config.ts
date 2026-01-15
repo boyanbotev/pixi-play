@@ -19,6 +19,21 @@ export const config = {
             atlas: 'planeAtlas',
         },
         tint: "0xFFEEDD",
+        crash: {
+            positionIterations: 50, // how many points to create in the motion path
+            distance: 50, // distance between wach point in the motion path
+            ease: "none",
+            rotation: {
+                ease: "power4.out",
+                duration: 2,
+                curviness: 0,
+            }, 
+            movement: {
+                ease: "none",
+                duration: 3,
+                curviness: 0,
+            }
+        },
     },
     obstacles: {
         spineData: {
@@ -46,7 +61,7 @@ export const config = {
         collisionDistance: 150,
     },
     bg: {
-        repeatWidth: -1500,
+        repeatWidth: -1498,
         moveIncrement: 0.5,
     }
 }

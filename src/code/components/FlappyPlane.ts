@@ -1,14 +1,17 @@
 import { Container } from "pixi.js";
-import { Spine } from "@esotericsoftware/spine-pixi-v7";
+import { Spine, Vector2 } from "@esotericsoftware/spine-pixi-v7";
 import { clamp, lerp } from "../common/utils";
 import { config } from "../common/config";
 import gsap from "gsap";
 import { Manager } from "../common/Manager";
+import MotionPathPlugin from "gsap/MotionPathPlugin";
 
 export type SpineData = {
     skeleton: string;
     atlas: string;
 }
+
+gsap.registerPlugin(MotionPathPlugin) 
 
 export default class FlappyPlane extends Container {
     private spine: Spine;
@@ -50,5 +53,55 @@ export default class FlappyPlane extends Container {
             this.speed = 0;
         }
         this.angle = lerp(this.angle, gsap.utils.mapRange(maxSpeed, minSpeed, upAngle, downAngle, this.speed), smoothing);
+    }
+
+    /**
+     * Swing the plane around in an arc and tween offscreen.
+     */
+    public async crash() {
+        const { crash: { rotation, movement, positionIterations, distance } } = config.plane;
+
+        var dir = new Vector2(-this.x, -this.y); // to top left hand corner
+        const targetAngle = this.getAngleFacing(dir);
+        let angle = this.angle;
+        let pos = { x: this.x, y: this.y };
+
+        const positions = [];
+        const angles = [];
+        for (let i = 0; i < positionIterations; i++) {
+            angle = lerp(angle, targetAngle, 0.1);
+
+            const angleRad = angle * (Math.PI / 180);
+
+            const x = pos.x + distance * Math.cos(angleRad);
+            const y = pos.y + distance * Math.sin(angleRad);
+            pos = { x, y };
+            positions.push({ x, y });
+            angles.push({ angle });
+        }
+
+        gsap.to(this, {
+            motionPath: {
+                path: angles,
+                curviness: rotation.curviness,
+            },
+            duration: rotation.duration,
+            ease: rotation.ease,
+        });
+
+        gsap.to(this, {
+            motionPath: {
+                path: positions,
+                curviness: movement.curviness,
+            },
+            duration: movement.duration,
+            ease: movement.ease,
+        });
+    }
+
+    getAngleFacing(dir: Vector2) {
+        let angleRad = Math.atan2(dir.y, dir.x);
+        let angleDeg = angleRad * (180 / Math.PI);
+        return (angleDeg + 360) % 360;
     }
 }

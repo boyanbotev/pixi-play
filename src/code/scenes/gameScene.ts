@@ -46,6 +46,7 @@ export class GameScene extends Container implements IScene {
             this.isGameOver = true;
             this.clouds.pause();
             this.controller.dispose();
+            this.player.crash();
             return;
         }
         this.player?.update(delta);
