@@ -1,6 +1,7 @@
 import { Container, Sprite } from "pixi.js";
 import { Assets } from "pixi.js";
 import { Manager } from "../common/Manager";
+import { config } from "../common/config";
 
 export default class ScrollingBackground extends Container {
     constructor(){
@@ -8,10 +9,10 @@ export default class ScrollingBackground extends Container {
         this.setup();
     }
 
-    
     public update(){
-        this.x -= 0.5;
-        if (this.x <= -1500) this.x = 0;
+        const { bg: { repeatWidth, moveIncrement } } = config;
+        this.x -= moveIncrement;
+        if (this.x <= repeatWidth) this.x = 0;
     }
 
     private setup(){

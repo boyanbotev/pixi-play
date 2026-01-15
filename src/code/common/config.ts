@@ -44,5 +44,9 @@ export const config = {
         maxScale: 1.2,
         yDifferentiation: 400,
         collisionDistance: 150,
+    },
+    bg: {
+        repeatWidth: -1500,
+        moveIncrement: 0.5,
     }
 }
