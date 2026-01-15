@@ -3,7 +3,7 @@ export const config = {
         initialJumpSeed: 23,
         gravity: 0.23,
         topPadding: 40,
-        bottomPadding: 60,
+        bottomPadding: 40,
         defaultMix: 0.3,
         animationSwitch: 0.5,
         rotation: {
@@ -17,7 +17,8 @@ export const config = {
         spineData: {
             skeleton: 'planeSkeleton',
             atlas: 'planeAtlas',
-        }
+        },
+        tint: "0xFFEEDD",
     },
     obstacles: {
         spineData: {

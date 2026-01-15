@@ -5,11 +5,13 @@ import { Controller } from "../components/Controller";
 import FlappyPlane from "../components/FlappyPlane";
 import { config } from "../common/config";
 import CloudController from "../components/CloudController";
+import ScrollingBackground from "../components/ScrollingBackground";
 
 
 export class GameScene extends Container implements IScene {
     private controller: Controller;
     private clouds: CloudController;
+    private bg: ScrollingBackground;
     private player: FlappyPlane;
     private isGameOver: boolean = false;
     constructor(){
@@ -28,8 +30,8 @@ export class GameScene extends Container implements IScene {
         this.controller = new Controller(this.player);
         this.clouds = new CloudController(this.player);
 
-        const bg = new Sprite(Assets.get("bg"));
-        this.addChild(bg);
+        this.bg = new ScrollingBackground();
+        this.addChild(this.bg);
         this.addChild(this.clouds);
 
         this.addChild(this.player);
@@ -47,5 +49,6 @@ export class GameScene extends Container implements IScene {
             return;
         }
         this.player?.update(delta);
+        this.bg?.update();
     }
 }

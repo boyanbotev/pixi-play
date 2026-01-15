@@ -27,6 +27,7 @@ export default class FlappyPlane extends Container {
         this.addChild(this.spine);
         this.scale.set(config.plane.scale);
         this.spine.state.data.defaultMix = config.plane.defaultMix;
+        this.spine.tint = Number(config.plane.tint);
     }
 
     public async flap() {

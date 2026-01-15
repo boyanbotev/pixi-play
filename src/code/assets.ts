@@ -5,7 +5,7 @@ export const manifest: ResolverManifest = {
         {
             name: "assetsBundle",
             assets: {
-                "bg": "assets/images/test.jpg",
+                "bg": "assets/images/bg.png",
                 "planeSkeleton": "assets/spine/paperplane.json",
                 "planeAtlas": "assets/spine/paperplane.atlas",
                 "cloudSkeleton": "assets/spine/clouds.json",
