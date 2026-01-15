@@ -3,11 +3,13 @@ import { ResolverManifest } from "pixi.js";
 export const manifest: ResolverManifest = {
     bundles: [
         {
-            name: "testBundle",
+            name: "assetsBundle",
             assets: {
                 "test": "assets/images/test.jpg",
-                'spineSkeleton': "assets/spine/paperplane.json",
-                'spineAtlas': "assets/spine/paperplane.atlas"
+                "planeSkeleton": "assets/spine/paperplane.json",
+                "planeAtlas": "assets/spine/paperplane.atlas",
+                "cloudSkeleton": "assets/spine/clouds.json",
+                "cloudAtlas": "assets/spine/clouds.atlas",
             }
         },
     ]

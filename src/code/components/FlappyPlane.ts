@@ -5,7 +5,7 @@ import { config } from "../common/config";
 import gsap from "gsap";
 import { Manager } from "../common/Manager";
 
-type SpineData = {
+export type SpineData = {
     skeleton: string;
     atlas: string;
 }

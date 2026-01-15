@@ -3,10 +3,13 @@ import { IScene } from "../common/IScene";
 import { Manager } from "../common/Manager";
 import { Controller } from "../components/Controller";
 import FlappyPlane from "../components/FlappyPlane";
+import { config } from "../common/config";
+import CloudController from "../components/CloudController";
 
 
 export class GameScene extends Container implements IScene {
     private controller: Controller;
+    private clouds: CloudController;
     private player: FlappyPlane;
     constructor(){
         super();
@@ -15,21 +18,20 @@ export class GameScene extends Container implements IScene {
 
     private async createGame(): Promise<void> {
         
-        const testBundle = await Assets.loadBundle("testBundle");
-        if (!testBundle) {
+        const assetsBundle = await Assets.loadBundle("assetsBundle");
+        if (!assetsBundle) {
             throw new Error("Bundle not loaded");
         }
-        const ids = Object.keys(testBundle);
-        const assets = ids.map((id) => testBundle[id] as Texture);
+        const ids = Object.keys(assetsBundle);
+        const assets = ids.map((id) => assetsBundle[id] as Texture);
 
-        this.player = new FlappyPlane({
-            skeleton: 'spineSkeleton',
-            atlas: 'spineAtlas',
-        });
+        this.player = new FlappyPlane(config.plane.spineData);
         this.controller = new Controller(this.player);
+        this.clouds = new CloudController();
 
-        var testSprite = new Sprite(assets[0]);
+        const testSprite = new Sprite(assets[0]);
         this.addChild(testSprite);
+        this.addChild(this.clouds);
 
         this.addChild(this.player);
 
@@ -41,3 +43,10 @@ export class GameScene extends Container implements IScene {
         this.player?.update(delta);
     }
 }
+
+//TODO:
+// how to create clouds, move and destroy them
+// and track collisions between player and clouds
+// CloudController will be a container of clouds
+// it will return its children, so GameScene or some other class can get distance between player and each cloud
+// cloudcontroller can update the clouds positions

@@ -14,5 +14,33 @@ export const config = {
             smoothing: 0.1,
         },
         scale: 0.6,
+        spineData: {
+            skeleton: 'planeSkeleton',
+            atlas: 'planeAtlas',
+        }
+    },
+    obstacles: {
+        spineData: {
+            skeleton: 'cloudSkeleton',
+            atlas: 'cloudAtlas',
+        },
+        startPosition: {
+            x: 2000,
+            y: 500,
+        },
+        endPosition: {
+            x: -900,
+            y: 500,
+        },
+        duration: 5,
+        minAnimation: 1,
+        animations: 7,
+        tint: "0x333333",
+        delays: {
+            betweenSpawn: 1.4,
+        },
+        minScale: 0.8,
+        maxScale: 1.2,
+        yDifferentiation: 400,
     }
 }
