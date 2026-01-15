@@ -1,7 +1,6 @@
 import { Container } from "pixi.js";
 import { SpineData } from "./FlappyPlane";
 import { Spine } from "@esotericsoftware/spine-pixi-v7";
-import gsap from "gsap";
 import { config } from "../common/config";
 import { getRandomFloat, getRandomInt } from "../common/utils";
 
@@ -14,8 +13,8 @@ export default class Cloud extends Container { // TODO: create base SpineCover c
         this.setup();
     }
 
-    public collisionWidth() {
-        return this.spine.width * this.scale.x;
+    public size() {
+        return { x: this.spine.width * this.scale.x, y: this.spine.height * this.scale.y };
     }
 
     setup() {

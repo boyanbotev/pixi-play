@@ -8,11 +8,13 @@ export default class CloudController extends Container {
     public isColliding = false;
     private player: Container;
     private tweens: gsap.core.Tween[];
+    private clouds: Cloud[];
     private paused: boolean;
     constructor(player: Container) {
         super();
         this.player = player;
         this.tweens = [];
+        this.clouds = []
         this.spawn();
         this.checkColliding();
     }
@@ -22,11 +24,27 @@ export default class CloudController extends Container {
         this.tweens.forEach(tween => tween.pause());
     }
 
+    public resume() {
+        this.paused = false;
+        this.tweens.forEach(tween => tween.play());
+        this.checkColliding();
+    }
+
     async checkColliding() {
+        if (this.paused) return;
+
         await delay(0.1);
-        this.isColliding = this.children.filter(c => 
-            Vector2.distance(c.position, this.player.position) < config.obstacles.collisionDistance
-        ).length > 0;
+        this.isColliding = this.clouds.filter(cloud =>  {
+            var localPos = cloud.toLocal(this.player.position);
+
+            if (localPos.x > cloud.size().x / 2 || 
+                localPos.y > cloud.size().y / 2 || 
+                localPos.x < -cloud.size().x / 2|| 
+                localPos.y < -cloud.size().y / 2) {
+                return false;
+            }
+            return true;
+        }).length > 0;
 
         this.checkColliding();
     }
@@ -37,11 +55,13 @@ export default class CloudController extends Container {
 
         const cloud = new Cloud(config.obstacles.spineData);
         this.addChild(cloud);
+        this.clouds.push(cloud);
         var tween = gsap.to(cloud, { x: config.obstacles.endPosition.x, duration, ease: "none" });
         this.tweens.push(tween);
 
         tween.then(() => {
             this.tweens.splice(this.tweens.indexOf(tween), 1);
+            this.clouds.splice(this.clouds.indexOf(cloud), 1);
             cloud.destroy();
         });
 
