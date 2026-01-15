@@ -9,8 +9,8 @@ export const config = {
         rotation: {
             maxSpeed: 100,
             minSpeed: -100,
-            upAngle: -180, // -200
-            downAngle: 180, // 170
+            upAngle: -180,
+            downAngle: 180,
             smoothing: 0.1,
         },
         scale: 0.6,
@@ -42,5 +42,6 @@ export const config = {
         minScale: 0.8,
         maxScale: 1.2,
         yDifferentiation: 400,
+        collisionDistance: 150,
     }
 }

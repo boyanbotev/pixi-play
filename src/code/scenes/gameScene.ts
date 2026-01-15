@@ -23,15 +23,13 @@ export class GameScene extends Container implements IScene {
         if (!assetsBundle) {
             throw new Error("Bundle not loaded");
         }
-        const ids = Object.keys(assetsBundle);
-        const assets = ids.map((id) => assetsBundle[id] as Texture);
 
         this.player = new FlappyPlane(config.plane.spineData);
         this.controller = new Controller(this.player);
         this.clouds = new CloudController(this.player);
 
-        const testSprite = new Sprite(assets[0]);
-        this.addChild(testSprite);
+        const bg = new Sprite(Assets.get("bg"));
+        this.addChild(bg);
         this.addChild(this.clouds);
 
         this.addChild(this.player);

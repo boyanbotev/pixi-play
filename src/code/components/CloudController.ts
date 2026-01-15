@@ -7,7 +7,6 @@ import gsap from "gsap";
 export default class CloudController extends Container {
     public isColliding = false;
     private player: Container;
-    private clouds: Cloud[];
     private tweens: gsap.core.Tween[];
     private paused: boolean;
     constructor(player: Container) {
@@ -25,10 +24,9 @@ export default class CloudController extends Container {
 
     async checkColliding() {
         await delay(0.1);
-        this.isColliding = this.children.filter(c => {
-            var distance = Vector2.distance(c.position, this.player.position);
-            return distance < 150;
-        }).length > 0;
+        this.isColliding = this.children.filter(c => 
+            Vector2.distance(c.position, this.player.position) < config.obstacles.collisionDistance
+        ).length > 0;
 
         this.checkColliding();
     }
