@@ -12,7 +12,6 @@ type SpineData = {
 
 export default class FlappyPlane extends Container {
     private spine: Spine;
-    private isFlapping: boolean;
     private speed: number;
 
     constructor(spineData: SpineData) {
@@ -26,19 +25,15 @@ export default class FlappyPlane extends Container {
 
     setup() {
         this.addChild(this.spine);
+        this.scale.set(config.plane.scale);
         this.spine.state.data.defaultMix = config.plane.defaultMix;
     }
 
     public async flap() {
-        //if (this.isFlapping) return;
-
         this.spine.state.setAnimation(0, "up", true);
         this.spine.state.addAnimation(0, "side", true, config.plane.animationSwitch);
 
-        //this.isFlapping = true;
         this.speed = config.plane.initialJumpSeed;
-
-        //this.isFlapping = false;
     }
 
     public update(deltaTime: number) {
@@ -46,8 +41,9 @@ export default class FlappyPlane extends Container {
         this.position.y -= this.speed * deltaTime;
 
         this.speed -= config.plane.gravity;
-        var bottomPos = Manager.Height -config.plane.bottomPadding
-        this.position.y = clamp(this.position.y, 0, bottomPos);
+        const topPos = config.plane.topPadding;
+        const bottomPos = Manager.Height -config.plane.bottomPadding
+        this.position.y = clamp(this.position.y, topPos, bottomPos);
 
         if (this.position.y == bottomPos) {
             this.speed = 0;
