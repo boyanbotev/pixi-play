@@ -6,12 +6,16 @@ import { config } from "../common/config";
 import { getRandomFloat, getRandomInt } from "../common/utils";
 
 export default class Cloud extends Container { // TODO: create base SpineCover class
-    spine: Spine;
+    private spine: Spine;
     constructor(spineData: SpineData) {
         super();
         this.spine = Spine.from(spineData);
         this.addChild(this.spine);
         this.setup();
+    }
+
+    public collisionWidth() {
+        return this.spine.width * this.scale.x;
     }
 
     setup() {
@@ -21,11 +25,5 @@ export default class Cloud extends Container { // TODO: create base SpineCover c
         this.spine.tint = Number(tint);
         this.scale.set(getRandomFloat(minScale, maxScale));
         this.position.y += getRandomFloat(-yDifferentiation, yDifferentiation);
-    }
-    // TODO: randomize cloud animation, size and y position based on config
-
-    public async move(duration: number) {
-        await gsap.to(this, { x: config.obstacles.endPosition.x, duration, ease: "none" });
-        this.destroy();
     }
 }

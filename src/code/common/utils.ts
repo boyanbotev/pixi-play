@@ -26,9 +26,9 @@ import gsap from "gsap";
             this.y = y;
         }
 
-        public distance(v1: Vector2, v2: Vector2) {
+        public static distance(v1: Vector2, v2: Vector2) {
             var dx = v1.x - v2.x;
             var dy = v1.y - v2.y;
-            return dx * dx + dy * dy
+            return Math.sqrt(dx * dx + dy * dy);
         }
     }

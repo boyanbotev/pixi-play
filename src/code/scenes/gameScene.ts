@@ -11,6 +11,7 @@ export class GameScene extends Container implements IScene {
     private controller: Controller;
     private clouds: CloudController;
     private player: FlappyPlane;
+    private isGameOver: boolean = false;
     constructor(){
         super();
         this.createGame();
@@ -27,7 +28,7 @@ export class GameScene extends Container implements IScene {
 
         this.player = new FlappyPlane(config.plane.spineData);
         this.controller = new Controller(this.player);
-        this.clouds = new CloudController();
+        this.clouds = new CloudController(this.player);
 
         const testSprite = new Sprite(assets[0]);
         this.addChild(testSprite);
@@ -40,13 +41,13 @@ export class GameScene extends Container implements IScene {
     }
 
     public update(delta: number): void {
+        if (this.isGameOver) return;
+        if (this.clouds.isColliding) {
+            this.isGameOver = true;
+            this.clouds.pause();
+            this.controller.dispose();
+            return;
+        }
         this.player?.update(delta);
     }
 }
-
-//TODO:
-// how to create clouds, move and destroy them
-// and track collisions between player and clouds
-// CloudController will be a container of clouds
-// it will return its children, so GameScene or some other class can get distance between player and each cloud
-// cloudcontroller can update the clouds positions
