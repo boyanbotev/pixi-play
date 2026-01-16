@@ -65,7 +65,7 @@ export default class FlappyPlane extends Container {
      * Swing the plane around in an arc and tween offscreen.
      */
     public async crash() {
-        const { crash: { rotation, movement, positionIterations, distance } } = config.plane;
+        const { crash: { rotation, movement, positionIterations, distance, lerpSmoothing } } = config.plane;
 
         var dir = new Vector2(-this.x, -this.y); // to top left hand corner
         const targetAngle = this.getAngleFacing(dir);
@@ -76,7 +76,7 @@ export default class FlappyPlane extends Container {
         const angles = [];
 
         for (let i = 0; i < positionIterations; i++) {
-            angle = lerp(angle, targetAngle, 0.1);
+            angle = lerp(angle, targetAngle, lerpSmoothing);
 
             const angleRad = angle * (Math.PI / 180);
             const x = pos.x + distance * Math.cos(angleRad);

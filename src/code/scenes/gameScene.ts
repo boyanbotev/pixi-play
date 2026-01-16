@@ -8,7 +8,6 @@ import CloudController from "../components/CloudController";
 import ScrollingBackground from "../components/ScrollingBackground";
 import { Vector2, delay } from "../common/utils";
 
-
 export class GameScene extends Container implements IScene {
     private controller: Controller;
     private clouds: CloudController;

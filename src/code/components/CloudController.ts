@@ -1,6 +1,6 @@
 import { Container } from "pixi.js";
 import Cloud from "./Cloud";
-import { delay, Vector2 } from "../common/utils";
+import { delay } from "../common/utils";
 import { config } from "../common/config";
 import gsap from "gsap";
 
@@ -33,7 +33,7 @@ export default class CloudController extends Container {
 
     public async fadeOut() {
         const { fadeOut: { duration, ease } } = config.obstacles;
-        
+
         await gsap.to(this, { alpha: 0, duration, ease });
         this.clouds.forEach(cloud => cloud.destroy());
         this.clouds = [];
@@ -62,12 +62,12 @@ export default class CloudController extends Container {
 
     async spawn() {
         if (this.paused) return;
-        const { duration, delays: { betweenSpawn } } = config.obstacles;
+        const { move: { duration, ease }, delays: { betweenSpawn } } = config.obstacles;
 
         const cloud = new Cloud(config.obstacles.spineData);
         this.addChild(cloud);
         this.clouds.push(cloud);
-        var tween = gsap.to(cloud, { x: config.obstacles.endPosition.x, duration, ease: "none" });
+        var tween = gsap.to(cloud, { x: config.obstacles.endPosition.x, duration, ease });
         this.tweens.push(tween);
 
         tween.then(() => {

@@ -22,6 +22,7 @@ export const config = {
         crash: {
             positionIterations: 50, // how many points to create in the motion path
             distance: 50, // distance between each point in the motion path
+            lerpSmoothing: 0.1, // how quickly to approach the target angle
             ease: "none",
             rotation: {
                 ease: "power4.out",
@@ -52,7 +53,10 @@ export const config = {
             x: -900,
             y: 500,
         },
-        duration: 5,
+        move: {
+            duration: 5,
+            ease: "none",
+        },
         minAnimation: 1,
         animations: 7,
         tint: "0x333333",

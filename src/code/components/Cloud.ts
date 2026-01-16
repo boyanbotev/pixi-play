@@ -4,7 +4,7 @@ import { Spine } from "@esotericsoftware/spine-pixi-v7";
 import { config } from "../common/config";
 import { getRandomFloat, getRandomInt } from "../common/utils";
 
-export default class Cloud extends Container { // TODO: create base SpineCover class
+export default class Cloud extends Container {
     private spine: Spine;
     constructor(spineData: SpineData) {
         super();
