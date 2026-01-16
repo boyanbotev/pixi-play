@@ -1,10 +1,11 @@
 import { Container } from "pixi.js";
-import { Spine, Vector2 } from "@esotericsoftware/spine-pixi-v7";
+import { Spine } from "@esotericsoftware/spine-pixi-v7";
 import { clamp, lerp } from "../common/utils";
 import { config } from "../common/config";
 import gsap from "gsap";
 import { Manager } from "../common/Manager";
 import MotionPathPlugin from "gsap/MotionPathPlugin";
+import { Vector2 } from "../common/utils";
 
 export type SpineData = {
     skeleton: string;
@@ -16,6 +17,7 @@ gsap.registerPlugin(MotionPathPlugin)
 export default class FlappyPlane extends Container {
     private spine: Spine;
     private speed: number;
+    private startPos: Vector2;
 
     constructor(spineData: SpineData) {
         super();
@@ -31,6 +33,11 @@ export default class FlappyPlane extends Container {
         this.scale.set(config.plane.scale);
         this.spine.state.data.defaultMix = config.plane.defaultMix;
         this.spine.tint = Number(config.plane.tint);
+    }
+
+    public setStartPos(pos: Vector2) {
+        this.startPos = pos;
+        this.position.set(pos.x, pos.y);
     }
 
     public async flap() {
@@ -80,23 +87,32 @@ export default class FlappyPlane extends Container {
             angles.push({ angle });
         }
 
-        gsap.to(this, {
-            motionPath: {
-                path: angles,
-                curviness: rotation.curviness,
-            },
-            duration: rotation.duration,
-            ease: rotation.ease,
-        });
+        await Promise.all([
+            gsap.to(this, {
+                motionPath: {
+                    path: angles,
+                    curviness: rotation.curviness,
+                },
+                duration: rotation.duration,
+                ease: rotation.ease,
+            }),
 
-        gsap.to(this, {
-            motionPath: {
-                path: positions,
-                curviness: movement.curviness,
-            },
-            duration: movement.duration,
-            ease: movement.ease,
-        });
+            gsap.to(this, {
+                motionPath: {
+                    path: positions,
+                    curviness: movement.curviness,
+                },
+                duration: movement.duration,
+                ease: movement.ease,
+            })
+        ]);
+    }
+
+    public async return() {
+        const { duration, ease } = config.plane.return;
+        
+        this.angle = 0;
+        await gsap.to(this, { ...this.startPos, duration, ease });
     }
 
     getAngleFacing(dir: Vector2) {

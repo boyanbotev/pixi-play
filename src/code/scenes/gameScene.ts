@@ -6,6 +6,7 @@ import FlappyPlane from "../components/FlappyPlane";
 import { config } from "../common/config";
 import CloudController from "../components/CloudController";
 import ScrollingBackground from "../components/ScrollingBackground";
+import { Vector2, delay } from "../common/utils";
 
 
 export class GameScene extends Container implements IScene {
@@ -36,8 +37,11 @@ export class GameScene extends Container implements IScene {
 
         this.addChild(this.player);
 
-        this.player.position.x = (Manager.Width / 2) + (this.player.width / 2);
-        this.player.position.y = (Manager.Height / 2) + (this.player.height / 2);
+        const playerStartPos = new Vector2(
+            (Manager.Width / 2) + (this.player.width / 2), 
+            (Manager.Height / 2) + (this.player.height / 2)
+        );
+        this.player.setStartPos(playerStartPos);
     }
 
     public update(delta: number): void {
@@ -46,10 +50,21 @@ export class GameScene extends Container implements IScene {
             this.isGameOver = true;
             this.clouds.pause();
             this.controller.dispose();
-            this.player.crash();
+            this.loseSequence();
             return;
         }
         this.player?.update(delta);
         this.bg?.update();
+    }
+
+    private async loseSequence() {
+        await Promise.all([
+            this.player.crash().then(() => this.player.return()),
+            delay(config.obstacles.delays.beforeFadeOut).then(() => this.clouds.fadeOut()),
+        ]);
+
+        this.clouds.resume();
+        this.controller.addListeners();
+        this.isGameOver = false;
     }
 }

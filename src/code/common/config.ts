@@ -34,6 +34,10 @@ export const config = {
                 curviness: 0,
             }
         },
+        return: {
+            duration: 2,
+            ease: "none",
+        }
     },
     obstacles: {
         spineData: {
@@ -54,11 +58,16 @@ export const config = {
         tint: "0x333333",
         delays: {
             betweenSpawn: 1.4,
+            beforeFadeOut: 1,
         },
         minScale: 0.8,
         maxScale: 1.2,
         yDifferentiation: 400,
         collisionDistance: 150,
+        fadeOut: {
+            duration: 4,
+            ease: "power4.inOut"
+        },
     },
     bg: {
         repeatWidth: -1498,

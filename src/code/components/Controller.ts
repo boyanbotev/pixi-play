@@ -5,8 +5,7 @@ export class Controller {
 
   constructor(player: FlappyPlane) {
     this.player = player;
-    window.addEventListener('keydown', this.keydownHandler);
-    window.addEventListener('mousedown', this.mousedownHandler);
+    this.addListeners();
   }
 
   private mousedownHandler = (event: MouseEvent): void => {
@@ -17,7 +16,12 @@ export class Controller {
     this.player.flap();
   };
 
-  dispose(): void {
+  public addListeners(): void {
+    window.addEventListener('keydown', this.keydownHandler);
+    window.addEventListener('mousedown', this.mousedownHandler);
+  }
+
+  public dispose(): void {
     window.removeEventListener('keydown', this.keydownHandler);
     window.removeEventListener('mousedown', this.mousedownHandler);
   }

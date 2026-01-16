@@ -26,8 +26,19 @@ export default class CloudController extends Container {
 
     public resume() {
         this.paused = false;
-        this.tweens.forEach(tween => tween.play());
+        this.isColliding = false;
+        this.spawn();
         this.checkColliding();
+    }
+
+    public async fadeOut() {
+        const { fadeOut: { duration, ease } } = config.obstacles;
+        
+        await gsap.to(this, { alpha: 0, duration, ease });
+        this.clouds.forEach(cloud => cloud.destroy());
+        this.clouds = [];
+        this.tweens = [];
+        this.alpha = 1;
     }
 
     async checkColliding() {
