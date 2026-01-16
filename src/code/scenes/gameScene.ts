@@ -15,13 +15,13 @@ export class GameScene extends Container implements IScene {
     private bg: ScrollingBackground;
     private player: FlappyPlane;
     private isGameOver: boolean = false;
+
     constructor(){
         super();
         this.createGame();
     }
 
-    private async createGame(): Promise<void> {
-        
+    private async createGame(): Promise<void> { 
         const assetsBundle = await Assets.loadBundle("assetsBundle");
         if (!assetsBundle) {
             throw new Error("Bundle not loaded");
@@ -30,11 +30,10 @@ export class GameScene extends Container implements IScene {
         this.player = new FlappyPlane(config.plane.spineData);
         this.controller = new Controller(this.player);
         this.clouds = new CloudController(this.player);
-
         this.bg = new ScrollingBackground();
+
         this.addChild(this.bg);
         this.addChild(this.clouds);
-
         this.addChild(this.player);
 
         const playerStartPos = new Vector2(
@@ -46,6 +45,7 @@ export class GameScene extends Container implements IScene {
 
     public update(delta: number): void {
         if (this.isGameOver) return;
+
         if (this.clouds.isColliding) {
             this.isGameOver = true;
             this.clouds.pause();
@@ -53,6 +53,7 @@ export class GameScene extends Container implements IScene {
             this.loseSequence();
             return;
         }
+
         this.player?.update(delta);
         this.bg?.update();
     }

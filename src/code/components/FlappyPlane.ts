@@ -24,11 +24,11 @@ export default class FlappyPlane extends Container {
         this.spine = Spine.from(spineData);
         this.speed = 0;
         
-        this.spine.state.setAnimation(0, "side", true);
         this.setup();
     }
 
     setup() {
+        this.spine.state.setAnimation(0, "side", true);
         this.addChild(this.spine);
         this.scale.set(config.plane.scale);
         this.spine.state.data.defaultMix = config.plane.defaultMix;
@@ -49,16 +49,15 @@ export default class FlappyPlane extends Container {
 
     public update(deltaTime: number) {
         const { plane: { rotation: { maxSpeed, minSpeed, upAngle, downAngle, smoothing } } } = config;
-        this.position.y -= this.speed * deltaTime;
 
+        this.position.y -= this.speed * deltaTime;
         this.speed -= config.plane.gravity;
+
         const topPos = config.plane.topPadding;
         const bottomPos = Manager.Height -config.plane.bottomPadding
         this.position.y = clamp(this.position.y, topPos, bottomPos);
 
-        if (this.position.y == bottomPos) {
-            this.speed = 0;
-        }
+        if (this.position.y == bottomPos) this.speed = 0;
         this.angle = lerp(this.angle, gsap.utils.mapRange(maxSpeed, minSpeed, upAngle, downAngle, this.speed), smoothing);
     }
 
@@ -70,18 +69,19 @@ export default class FlappyPlane extends Container {
 
         var dir = new Vector2(-this.x, -this.y); // to top left hand corner
         const targetAngle = this.getAngleFacing(dir);
+
         let angle = this.angle;
         let pos = { x: this.x, y: this.y };
-
         const positions = [];
         const angles = [];
+
         for (let i = 0; i < positionIterations; i++) {
             angle = lerp(angle, targetAngle, 0.1);
 
             const angleRad = angle * (Math.PI / 180);
-
             const x = pos.x + distance * Math.cos(angleRad);
             const y = pos.y + distance * Math.sin(angleRad);
+
             pos = { x, y };
             positions.push({ x, y });
             angles.push({ angle });
@@ -110,7 +110,6 @@ export default class FlappyPlane extends Container {
 
     public async return() {
         const { duration, ease } = config.plane.return;
-        
         this.angle = 0;
         await gsap.to(this, { ...this.startPos, duration, ease });
     }
