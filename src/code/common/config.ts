@@ -1,7 +1,7 @@
 export const config = {
     plane: {
-        initialJumpSeed: 23,
-        gravity: 0.23,
+        initialJumpSeed: 20,
+        gravity: 0.2,
         topPadding: 40,
         bottomPadding: 40,
         defaultMix: 0.3,
@@ -21,7 +21,7 @@ export const config = {
         tint: "0xFFEEDD",
         crash: {
             positionIterations: 50, // how many points to create in the motion path
-            distance: 50, // distance between wach point in the motion path
+            distance: 50, // distance between each point in the motion path
             ease: "none",
             rotation: {
                 ease: "power4.out",
