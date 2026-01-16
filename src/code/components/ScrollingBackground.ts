@@ -4,14 +4,21 @@ import { Manager } from "../common/Manager";
 import { config } from "../common/config";
 
 export default class ScrollingBackground extends Container {
+    private moveIncrement: number;
     constructor(){
         super();
+        this.moveIncrement = config.bg.moveIncrement;
         this.setup();
     }
 
+    public reset() {
+        this.moveIncrement = config.bg.moveIncrement;
+    }
+
     public update(){
-        const { bg: { repeatWidth, moveIncrement } } = config;
-        this.x -= moveIncrement;
+        const { bg: { repeatWidth, increaseAmount } } = config;
+        this.x -= this.moveIncrement;
+        this.moveIncrement += increaseAmount;
         if (this.x <= repeatWidth) this.x = 0;
     }
 

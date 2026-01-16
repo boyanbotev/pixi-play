@@ -10,12 +10,17 @@ export default class CloudController extends Container {
     private tweens: gsap.core.Tween[];
     private clouds: Cloud[];
     private paused: boolean;
+    private betweenSpawn: number;
+    private moveDuration: number;
+
     constructor(player: Container) {
         super();
         this.player = player;
         this.tweens = [];
         this.clouds = []
         this.paused = true;
+        this.betweenSpawn = config.obstacles.delays.betweenSpawn;
+        this.moveDuration = config.obstacles.move.duration;
     }
 
     public pause() {
@@ -26,6 +31,8 @@ export default class CloudController extends Container {
     public resume() {
         this.paused = false;
         this.isColliding = false;
+        this.betweenSpawn = config.obstacles.delays.betweenSpawn;
+        this.moveDuration = config.obstacles.move.duration;
         this.spawn();
         this.checkColliding();
     }
@@ -61,12 +68,12 @@ export default class CloudController extends Container {
 
     async spawn() {
         if (this.paused) return;
-        const { move: { duration, ease }, delays: { betweenSpawn } } = config.obstacles;
+        const { move: { ease, decreaseAmount } } = config.obstacles;
 
         const cloud = new Cloud(config.obstacles.spineData);
         this.addChild(cloud);
         this.clouds.push(cloud);
-        var tween = gsap.to(cloud, { x: config.obstacles.endPosition.x, duration, ease });
+        var tween = gsap.to(cloud, { x: config.obstacles.endPosition.x, duration: this.moveDuration, ease });
         this.tweens.push(tween);
 
         tween.then(() => {
@@ -75,7 +82,10 @@ export default class CloudController extends Container {
             cloud.destroy();
         });
 
-        await delay(betweenSpawn);
+        await delay(this.betweenSpawn);
+
+        this.betweenSpawn -= config.obstacles.delays.decreaseAmount;
+        this.moveDuration -= decreaseAmount;
 
         this.spawn();
     }

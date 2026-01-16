@@ -51,6 +51,7 @@ export class GameScene extends Container implements IScene {
             this.isGameActive = true;
             this.clouds.resume();
             this.controller.addListeners();
+            this.bg.reset();
             startButton.destroy();
         });
         this.addChild(startButton);

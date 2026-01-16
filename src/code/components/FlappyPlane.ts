@@ -17,12 +17,14 @@ gsap.registerPlugin(MotionPathPlugin)
 export default class FlappyPlane extends Container {
     private spine: Spine;
     private speed: number;
+    private horizontalSpeedMultiplier: number;
     private startPos: Vector2;
 
     constructor(spineData: SpineData) {
         super();
         this.spine = Spine.from(spineData);
         this.speed = 0;
+        this.horizontalSpeedMultiplier = config.plane.speedMultiplier;
         
         this.setup();
     }
@@ -50,8 +52,8 @@ export default class FlappyPlane extends Container {
     public update(deltaTime: number) {
         const { plane: { rotation: { maxSpeed, minSpeed, upAngle, downAngle, smoothing } } } = config;
 
-        this.position.y -= this.speed * deltaTime;
-        this.speed -= config.plane.gravity;
+        this.position.y -= this.speed * this.horizontalSpeedMultiplier * deltaTime;
+        this.speed -= config.plane.gravity * this.horizontalSpeedMultiplier;
 
         const topPos = config.plane.topPadding;
         const bottomPos = Manager.Height -config.plane.bottomPadding
@@ -59,6 +61,8 @@ export default class FlappyPlane extends Container {
 
         if (this.position.y == bottomPos) this.speed = 0;
         this.angle = lerp(this.angle, gsap.utils.mapRange(maxSpeed, minSpeed, upAngle, downAngle, this.speed), smoothing);
+
+        this.horizontalSpeedMultiplier += config.plane.increaseAmount;
     }
 
     /**
@@ -112,6 +116,8 @@ export default class FlappyPlane extends Container {
         const { duration, ease } = config.plane.return;
         this.angle = 0;
         await gsap.to(this, { ...this.startPos, duration, ease });
+        
+        this.horizontalSpeedMultiplier = config.plane.speedMultiplier;
     }
 
     getAngleFacing(dir: Vector2) {
