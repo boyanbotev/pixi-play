@@ -60,7 +60,7 @@ export default class FlappyPlane extends Container {
         this.position.y = clamp(this.position.y, topPos, bottomPos);
 
         if (this.position.y == bottomPos) this.speed = 0;
-        this.angle = lerp(this.angle, gsap.utils.mapRange(maxSpeed, minSpeed, upAngle, downAngle, this.speed), smoothing);
+        this.angle = lerp(this.angle, gsap.utils.mapRange(maxSpeed, minSpeed, upAngle, downAngle, this.speed), smoothing * deltaTime);
 
         this.horizontalSpeedMultiplier += config.plane.increaseAmount * deltaTime;
     }

@@ -86,4 +86,11 @@ export const config = {
         width: 500,
         height: 200,
     },
+    loaderBar: {
+        fillColor: 0x94c6b4,
+        borderColor: 0x4e3846,
+        borderWidth: 12,
+        widthMultiplier: 0.8,
+        heightMultiplier: 0.08,
+    },
 }

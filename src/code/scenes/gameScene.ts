@@ -1,4 +1,4 @@
-import { Container, Assets, Texture, Sprite } from "pixi.js";
+import { Container, Assets } from "pixi.js";
 import { IScene } from "../common/IScene";
 import { Manager } from "../common/Manager";
 import { Controller } from "../components/Controller";
@@ -32,9 +32,7 @@ export class GameScene extends Container implements IScene {
         this.clouds = new CloudController(this.player);
         this.bg = new ScrollingBackground();
 
-        this.addChild(this.bg);
-        this.addChild(this.clouds);
-        this.addChild(this.player);
+        this.addChild(this.bg, this.clouds, this.player);
 
         const playerStartPos = new Vector2(
             (Manager.Width / 2) + (this.player.width / 2), 

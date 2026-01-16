@@ -1,4 +1,5 @@
 import { Container, Graphics } from "pixi.js";
+import { config } from "../common/config";
 
 export class ProgressBar extends Container {
     private fill: Graphics;
@@ -7,13 +8,20 @@ export class ProgressBar extends Container {
     constructor(width: number, height: number) {
         super();
 
+        const { loaderBar: { fillColor, borderColor, borderWidth, widthMultiplier, heightMultiplier } } = config;
+
+        const loaderBarWidth = width * widthMultiplier;
+        const loaderBarHeight = height * heightMultiplier;
+        this.position.x = (width - loaderBarWidth) / 2;
+        this.position.y = (height - loaderBarHeight) / 2;
+
         this.border = new Graphics();
-        this.border.lineStyle(4, 0x000000, 1);
-        this.border.drawRect(0, 0, width, height);
+        this.border.lineStyle(borderWidth, borderColor, 1);
+        this.border.drawRect(0, 0, loaderBarWidth, loaderBarHeight);
 
         this.fill = new Graphics();
-        this.fill.beginFill(0x94c6b4, 1);
-        this.fill.drawRect(0, 0, width, height);
+        this.fill.beginFill(fillColor, 1);
+        this.fill.drawRect(0, 0, loaderBarWidth, loaderBarHeight);
         this.fill.endFill();
         
         this.fill.scale.x = 0;
