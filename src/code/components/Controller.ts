@@ -17,11 +17,11 @@ export class Controller {
 
   public addListeners(): void {
     window.addEventListener('keydown', this.keydownHandler);
-    window.addEventListener('mousedown', this.mousedownHandler);
+    window.addEventListener('pointerdown', this.mousedownHandler);
   }
 
   public dispose(): void {
     window.removeEventListener('keydown', this.keydownHandler);
-    window.removeEventListener('mousedown', this.mousedownHandler);
+    window.removeEventListener('pointerdown', this.mousedownHandler);
   }
 }

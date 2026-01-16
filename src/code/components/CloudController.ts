@@ -1,4 +1,4 @@
-import { Container } from "pixi.js";
+import { BlurFilter, Container } from "pixi.js";
 import Cloud from "./Cloud";
 import { delay } from "../common/utils";
 import { config } from "../common/config";
