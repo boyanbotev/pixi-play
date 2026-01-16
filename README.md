@@ -19,8 +19,6 @@ This repository contains the code and assets for 'Flappy Plane,' a game develope
 ### Asset Sources
 - Art Assets by Tsveta Ilieva
 - Spine Animation by Anna Walterscheid
-- Game concept by Valeriya Stoycheva and Tsveta Ilieva
-- Music by the author
 ___
 Install all dependencies with
  ```sh
