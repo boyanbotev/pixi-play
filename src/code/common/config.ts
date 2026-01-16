@@ -31,12 +31,12 @@ export const config = {
             }, 
             movement: {
                 ease: "none",
-                duration: 3,
+                duration: 2.5,
                 curviness: 0,
             }
         },
         return: {
-            duration: 2,
+            duration: 1.5,
             ease: "none",
         }
     },
@@ -69,7 +69,7 @@ export const config = {
         yDifferentiation: 400,
         collisionDistance: 150,
         fadeOut: {
-            duration: 4,
+            duration: 2,
             ease: "power4.inOut"
         },
     },
