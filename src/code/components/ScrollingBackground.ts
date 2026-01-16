@@ -15,10 +15,10 @@ export default class ScrollingBackground extends Container {
         this.moveIncrement = config.bg.moveIncrement;
     }
 
-    public update(){
+    public update(deltaTime: number){
         const { bg: { repeatWidth, increaseAmount } } = config;
-        this.x -= this.moveIncrement;
-        this.moveIncrement += increaseAmount;
+        this.x -= this.moveIncrement * deltaTime;
+        this.moveIncrement += increaseAmount * deltaTime;
         if (this.x <= repeatWidth) this.x = 0;
     }
 

@@ -1,9 +1,9 @@
 export const config = {
     plane: {
         speedMultiplier: 1.1,
-        increaseAmount: 0.000017,
+        increaseAmount: 0.00017,
         initialJumpSeed: 20,
-        gravity: 0.2,
+        gravity: 0.6,
         topPadding: 40,
         bottomPadding: 40,
         defaultMix: 0.3,
@@ -80,7 +80,7 @@ export const config = {
     bg: {
         repeatWidth: -1498,
         moveIncrement: 0.5,
-        increaseAmount: 0.00007,
+        increaseAmount: 0.0007,
     },
     startButton: {
         width: 500,

@@ -70,7 +70,7 @@ export class GameScene extends Container implements IScene {
         }
 
         this.player?.update(delta);
-        this.bg?.update();
+        this.bg?.update(delta);
     }
 
     private async loseSequence() {

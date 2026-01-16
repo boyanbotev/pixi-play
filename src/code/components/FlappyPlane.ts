@@ -53,7 +53,7 @@ export default class FlappyPlane extends Container {
         const { plane: { rotation: { maxSpeed, minSpeed, upAngle, downAngle, smoothing } } } = config;
 
         this.position.y -= this.speed * this.horizontalSpeedMultiplier * deltaTime;
-        this.speed -= config.plane.gravity * this.horizontalSpeedMultiplier;
+        this.speed -= config.plane.gravity * this.horizontalSpeedMultiplier * deltaTime;
 
         const topPos = config.plane.topPadding;
         const bottomPos = Manager.Height -config.plane.bottomPadding
@@ -62,7 +62,7 @@ export default class FlappyPlane extends Container {
         if (this.position.y == bottomPos) this.speed = 0;
         this.angle = lerp(this.angle, gsap.utils.mapRange(maxSpeed, minSpeed, upAngle, downAngle, this.speed), smoothing);
 
-        this.horizontalSpeedMultiplier += config.plane.increaseAmount;
+        this.horizontalSpeedMultiplier += config.plane.increaseAmount * deltaTime;
     }
 
     /**
@@ -116,7 +116,7 @@ export default class FlappyPlane extends Container {
         const { duration, ease } = config.plane.return;
         this.angle = 0;
         await gsap.to(this, { ...this.startPos, duration, ease });
-        
+
         this.horizontalSpeedMultiplier = config.plane.speedMultiplier;
     }
 
