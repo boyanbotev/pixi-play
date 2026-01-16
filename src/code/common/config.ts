@@ -13,7 +13,7 @@ export const config = {
             minSpeed: -100,
             upAngle: -180,
             downAngle: 180,
-            smoothing: 0.1,
+            smoothing: 0.3,
         },
         scale: 0.6,
         spineData: {
