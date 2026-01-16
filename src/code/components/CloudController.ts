@@ -15,8 +15,7 @@ export default class CloudController extends Container {
         this.player = player;
         this.tweens = [];
         this.clouds = []
-        this.spawn();
-        this.checkColliding();
+        this.paused = true;
     }
 
     public pause() {

@@ -76,5 +76,9 @@ export const config = {
     bg: {
         repeatWidth: -1498,
         moveIncrement: 0.5,
-    }
+    },
+    startButton: {
+        width: 500,
+        height: 200,
+    },
 }

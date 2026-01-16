@@ -5,7 +5,6 @@ export class Controller {
 
   constructor(player: FlappyPlane) {
     this.player = player;
-    this.addListeners();
   }
 
   private mousedownHandler = (event: MouseEvent): void => {

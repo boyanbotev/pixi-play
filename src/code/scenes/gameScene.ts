@@ -7,13 +7,14 @@ import { config } from "../common/config";
 import CloudController from "../components/CloudController";
 import ScrollingBackground from "../components/ScrollingBackground";
 import { Vector2, delay } from "../common/utils";
+import Button from "../components/Button";
 
 export class GameScene extends Container implements IScene {
     private controller: Controller;
     private clouds: CloudController;
     private bg: ScrollingBackground;
     private player: FlappyPlane;
-    private isGameOver: boolean = false;
+    private isGameActive: boolean = false;
 
     constructor(){
         super();
@@ -40,13 +41,27 @@ export class GameScene extends Container implements IScene {
             (Manager.Height / 2) + (this.player.height / 2)
         );
         this.player.setStartPos(playerStartPos);
+
+        this.createStartButton();
+    }
+
+    private createStartButton() {
+        const { width, height } = config.startButton;
+        const startButton = new Button(Assets.get("startButton"), width, height, () => {
+            this.isGameActive = true;
+            this.clouds.resume();
+            this.controller.addListeners();
+            startButton.destroy();
+        });
+        this.addChild(startButton);
+        startButton.position.set(Manager.Width / 2, Manager.Height / 2);
     }
 
     public update(delta: number): void {
-        if (this.isGameOver) return;
+        if (!this.isGameActive) return;
 
         if (this.clouds.isColliding) {
-            this.isGameOver = true;
+            this.isGameActive = false;
             this.clouds.pause();
             this.controller.dispose();
             this.loseSequence();
@@ -63,8 +78,6 @@ export class GameScene extends Container implements IScene {
             delay(config.obstacles.delays.beforeFadeOut).then(() => this.clouds.fadeOut()),
         ]);
 
-        this.clouds.resume();
-        this.controller.addListeners();
-        this.isGameOver = false;
+        this.createStartButton();
     }
 }
