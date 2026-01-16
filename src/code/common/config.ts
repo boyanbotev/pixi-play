@@ -1,6 +1,6 @@
 export const config = {
     plane: {
-        speedMultiplier: 1.1,
+        speedMultiplier: 1.25,
         increaseAmount: 0.00017,
         initialJumpSeed: 20,
         gravity: 0.6,
@@ -20,7 +20,7 @@ export const config = {
             skeleton: 'planeSkeleton',
             atlas: 'planeAtlas',
         },
-        tint: "0xFFEEDD",
+        tint: 0xFFEEDD,
         crash: {
             positionIterations: 50, // how many points to create in the motion path
             distance: 50, // distance between each point in the motion path
@@ -62,7 +62,7 @@ export const config = {
         },
         minAnimation: 1,
         animations: 7,
-        tint: "0x333333",
+        tint: 0x333333,
         delays: {
             betweenSpawn: 1.4,
             decreaseAmount: 0.011,

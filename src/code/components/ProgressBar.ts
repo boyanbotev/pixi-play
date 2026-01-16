@@ -12,7 +12,7 @@ export class ProgressBar extends Container {
         this.border.drawRect(0, 0, width, height);
 
         this.fill = new Graphics();
-        this.fill.beginFill(0x00ff00, 1);
+        this.fill.beginFill(0x94c6b4, 1);
         this.fill.drawRect(0, 0, width, height);
         this.fill.endFill();
         

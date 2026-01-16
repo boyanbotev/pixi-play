@@ -17,7 +17,7 @@ export class LoaderScene extends Container implements IScene {
         const loaderBarHeight = Manager.Height * 0.05;
 
         this.loaderBarFill = new Graphics();
-        this.loaderBarFill.beginFill(0x00ff00, 1);
+        this.loaderBarFill.beginFill(0x94c6b4, 1);
         this.loaderBarFill.drawRect(0, 0, loaderBarWidth, loaderBarHeight);
         this.loaderBarFill.endFill();
         this.loaderBarFill.scale.x = 0;
