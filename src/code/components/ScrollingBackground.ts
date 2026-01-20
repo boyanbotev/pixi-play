@@ -7,18 +7,12 @@ export default class ScrollingBackground extends Container {
     private moveIncrement: number;
     constructor(){
         super();
-        this.moveIncrement = config.bg.moveIncrement;
         this.setup();
     }
 
-    public reset() {
-        this.moveIncrement = config.bg.moveIncrement;
-    }
-
-    public update(deltaTime: number){
-        const { bg: { repeatWidth, increaseAmount } } = config;
-        this.x -= this.moveIncrement * deltaTime;
-        this.moveIncrement += increaseAmount * deltaTime;
+    public update(deltaTime: number, speedMultiplier: number) {
+        const { bg: { repeatWidth } } = config;
+        this.x -= config.bg.moveIncrement * deltaTime * speedMultiplier;
         if (this.x <= repeatWidth) this.x = 0;
     }
 

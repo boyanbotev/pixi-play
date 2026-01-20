@@ -15,6 +15,7 @@ export class GameScene extends Container implements IScene {
     private bg: ScrollingBackground;
     private player: FlappyPlane;
     private isGameActive: boolean = false;
+    private speedMultiplier: number;
 
     constructor(){
         super();
@@ -31,6 +32,7 @@ export class GameScene extends Container implements IScene {
         this.controller = new Controller(this.player);
         this.clouds = new CloudController(this.player);
         this.bg = new ScrollingBackground();
+        this.speedMultiplier = config.speedMultiplier;
 
         this.addChild(this.bg, this.clouds, this.player);
 
@@ -46,14 +48,18 @@ export class GameScene extends Container implements IScene {
     private createStartButton() {
         const { width, height } = config.startButton;
         const startButton = new Button(Assets.get("startButton"), width, height, () => {
-            this.isGameActive = true;
-            this.clouds.resume();
-            this.controller.addListeners();
-            this.bg.reset();
             startButton.destroy();
+            this.reset();
         });
         this.addChild(startButton);
         startButton.position.set(Manager.Width / 2, Manager.Height / 2);
+    }
+
+    private reset() {
+        this.isGameActive = true;
+        this.speedMultiplier = config.speedMultiplier;
+        this.clouds.resume();
+        this.controller.addListeners();
     }
 
     public update(delta: number): void {
@@ -67,8 +73,11 @@ export class GameScene extends Container implements IScene {
             return;
         }
 
-        this.player?.update(delta);
-        this.bg?.update(delta);
+        this.speedMultiplier += config.increaseAmount * delta;
+
+        this.player?.update(delta, this.speedMultiplier);
+        this.bg?.update(delta, this.speedMultiplier);
+        this.clouds?.update(delta, this.speedMultiplier);
     }
 
     private async loseSequence() {

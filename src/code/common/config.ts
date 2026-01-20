@@ -1,7 +1,7 @@
 export const config = {
+    speedMultiplier: 1.25,
+    increaseAmount: 0.00017,
     plane: {
-        speedMultiplier: 1.25,
-        increaseAmount: 0.00017,
         initialJumpSeed: 20,
         gravity: 0.6,
         topPadding: 40,
@@ -56,16 +56,15 @@ export const config = {
             y: 500,
         },
         move: {
-            duration: 5,
-            decreaseAmount: 0.04,
+            duration: 7,
             ease: "none",
+            betweenSpawnDistance: 12,
+            baseSpeed: 8,
         },
         minAnimation: 1,
         animations: 7,
         tint: 0x333333,
         delays: {
-            betweenSpawn: 1.4,
-            decreaseAmount: 0.011,
             beforeFadeOut: 1,
         },
         minScale: 0.8,
@@ -80,7 +79,6 @@ export const config = {
     bg: {
         repeatWidth: -1498,
         moveIncrement: 0.5,
-        increaseAmount: 0.0007,
     },
     startButton: {
         width: 500,

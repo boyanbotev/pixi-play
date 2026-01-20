@@ -1,4 +1,4 @@
-import { BlurFilter, Container } from "pixi.js";
+import { Container } from "pixi.js";
 import Cloud from "./Cloud";
 import { delay } from "../common/utils";
 import { config } from "../common/config";
@@ -10,17 +10,15 @@ export default class CloudController extends Container {
     private tweens: gsap.core.Tween[];
     private clouds: Cloud[];
     private paused: boolean;
-    private betweenSpawn: number;
-    private moveDuration: number;
+    private speedMultiplier: number;
 
     constructor(player: Container) {
         super();
+        this.speedMultiplier = 1;
         this.player = player;
         this.tweens = [];
         this.clouds = []
         this.paused = true;
-        this.betweenSpawn = config.obstacles.delays.betweenSpawn;
-        this.moveDuration = config.obstacles.move.duration;
     }
 
     public pause() {
@@ -31,8 +29,6 @@ export default class CloudController extends Container {
     public resume() {
         this.paused = false;
         this.isColliding = false;
-        this.betweenSpawn = config.obstacles.delays.betweenSpawn;
-        this.moveDuration = config.obstacles.move.duration;
         this.spawn();
         this.checkColliding();
     }
@@ -66,15 +62,23 @@ export default class CloudController extends Container {
         this.checkColliding();
     }
 
+    async update(deltaTime: number, speedMultiplier: number) {
+        if (this.paused) return;
+        this.speedMultiplier = speedMultiplier;
+        this.tweens.forEach(tween => tween.timeScale(speedMultiplier));
+    }
+
     async spawn() {
         if (this.paused) return;
-        const { move: { ease, decreaseAmount } } = config.obstacles;
+        const { move: { ease, betweenSpawnDistance, baseSpeed } } = config.obstacles;
 
         const cloud = new Cloud(config.obstacles.spineData);
         this.addChild(cloud);
         this.clouds.push(cloud);
-        var tween = gsap.to(cloud, { x: config.obstacles.endPosition.x, duration: this.moveDuration, ease });
+        var tween = gsap.to(cloud, { x: config.obstacles.endPosition.x, duration: config.obstacles.move.duration, ease });
         this.tweens.push(tween);
+
+        var betweenSpawnDelay = betweenSpawnDistance / (baseSpeed * this.speedMultiplier);
 
         tween.then(() => {
             this.tweens.splice(this.tweens.indexOf(tween), 1);
@@ -82,10 +86,7 @@ export default class CloudController extends Container {
             cloud.destroy();
         });
 
-        await delay(this.betweenSpawn);
-
-        this.betweenSpawn -= config.obstacles.delays.decreaseAmount;
-        this.moveDuration -= decreaseAmount;
+        await delay(betweenSpawnDelay);
 
         this.spawn();
     }
