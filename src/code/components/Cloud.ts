@@ -5,6 +5,7 @@ import { config } from "../common/config";
 import { getRandomFloat, getRandomInt } from "../common/utils";
 
 export default class Cloud extends Container {
+    public tween: gsap.core.Tween;
     private spine: Spine;
     constructor(spineData: SpineData) {
         super();
@@ -24,5 +25,10 @@ export default class Cloud extends Container {
         this.spine.tint = tint;
         this.scale.set(getRandomFloat(minScale, maxScale));
         this.position.y += yAdjustments[getRandomInt(0, yAdjustments.length - 1)];
+    }
+
+    destroy() {
+        this.spine.destroy();
+        super.destroy();
     }
 }

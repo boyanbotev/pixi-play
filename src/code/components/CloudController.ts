@@ -7,7 +7,6 @@ import gsap from "gsap";
 export default class CloudController extends Container {
     public isColliding = false;
     private player: Container;
-    private tweens: gsap.core.Tween[];
     private clouds: Cloud[];
     private paused: boolean;
     private speedMultiplier: number;
@@ -16,14 +15,13 @@ export default class CloudController extends Container {
         super();
         this.speedMultiplier = 1;
         this.player = player;
-        this.tweens = [];
         this.clouds = []
         this.paused = true;
     }
 
     public pause() {
         this.paused = true;
-        this.tweens.forEach(tween => tween.pause());
+        this.clouds.forEach(cloud => cloud.tween.kill());
     }
 
     public resume() {
@@ -39,7 +37,6 @@ export default class CloudController extends Container {
         await gsap.to(this, { alpha: 0, duration, ease });
         this.clouds.forEach(cloud => cloud.destroy());
         this.clouds = [];
-        this.tweens = [];
         this.alpha = 1;
     }
 
@@ -65,7 +62,7 @@ export default class CloudController extends Container {
     async update(deltaTime: number, speedMultiplier: number) {
         if (this.paused) return;
         this.speedMultiplier = speedMultiplier;
-        this.tweens.forEach(tween => tween.timeScale(speedMultiplier));
+        this.clouds.forEach(cloud => cloud.tween.timeScale(speedMultiplier));
     }
 
     async spawn() {
@@ -75,13 +72,11 @@ export default class CloudController extends Container {
         const cloud = new Cloud(config.obstacles.spineData);
         this.addChild(cloud);
         this.clouds.push(cloud);
-        var tween = gsap.to(cloud, { x: config.obstacles.endPosition.x, duration: config.obstacles.move.duration, ease });
-        this.tweens.push(tween);
+        cloud.tween = gsap.to(cloud, { x: config.obstacles.endPosition.x, duration: config.obstacles.move.duration, ease });
 
         var betweenSpawnDelay = betweenSpawnDistance / (baseSpeed * this.speedMultiplier);
 
-        tween.then(() => {
-            this.tweens.splice(this.tweens.indexOf(tween), 1);
+        cloud.tween.then(() => {
             this.clouds.splice(this.clouds.indexOf(cloud), 1);
             cloud.destroy();
         });
