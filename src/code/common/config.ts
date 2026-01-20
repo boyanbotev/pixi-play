@@ -71,6 +71,7 @@ export const config = {
         minScale: 0.8,
         maxScale: 1.2,
         yDifferentiation: 400,
+        yAdjustments: [ -400, -400, -300, -200, -100, 0, 100, 200, 300, 300, 300, 300, 300],
         collisionDistance: 150,
         fadeOut: {
             duration: 2,

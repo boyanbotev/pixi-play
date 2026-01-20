@@ -18,11 +18,11 @@ export default class Cloud extends Container {
     }
 
     setup() {
-        const { minAnimation, animations, startPosition, tint, minScale, maxScale, yDifferentiation } = config.obstacles;
+        const { minAnimation, animations, startPosition, tint, minScale, maxScale, yAdjustments } = config.obstacles;
         this.spine.state.setAnimation(0, `cloud${getRandomInt(minAnimation, animations)}`, true);
         this.position.set(startPosition.x, startPosition.y);
         this.spine.tint = tint;
         this.scale.set(getRandomFloat(minScale, maxScale));
-        this.position.y += getRandomFloat(-yDifferentiation, yDifferentiation);
+        this.position.y += yAdjustments[getRandomInt(0, yAdjustments.length - 1)];
     }
 }
