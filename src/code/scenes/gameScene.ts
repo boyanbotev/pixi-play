@@ -8,6 +8,7 @@ import CloudController from "../components/CloudController";
 import ScrollingBackground from "../components/ScrollingBackground";
 import { Vector2, delay } from "../common/utils";
 import Button from "../components/Button";
+import Particles from "../components/Particles";
 
 export class GameScene extends Container implements IScene {
     private controller: Controller;
@@ -28,13 +29,15 @@ export class GameScene extends Container implements IScene {
             throw new Error("Bundle not loaded");
         }
 
-        this.player = new FlappyPlane(config.plane.spineData);
+        const flappyPlaneParticles = new Particles();
+        this.player = new FlappyPlane(config.plane.spineData, flappyPlaneParticles);
         this.controller = new Controller(this.player);
         this.clouds = new CloudController(this.player);
         this.bg = new ScrollingBackground();
+
         this.speedMultiplier = config.speedMultiplier;
 
-        this.addChild(this.bg, this.clouds, this.player);
+        this.addChild(this.bg, this.clouds, flappyPlaneParticles, this.player);
 
         const playerStartPos = new Vector2(
             (Manager.Width / 2) + (this.player.width / 2), 

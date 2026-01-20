@@ -1,11 +1,12 @@
-import { Container } from "pixi.js";
+import { Container, ObservablePoint } from "pixi.js";
 import { Spine } from "@esotericsoftware/spine-pixi-v7";
-import { clamp, lerp } from "../common/utils";
+import { clamp, lerp, delay } from "../common/utils";
 import { config } from "../common/config";
 import gsap from "gsap";
 import { Manager } from "../common/Manager";
 import MotionPathPlugin from "gsap/MotionPathPlugin";
 import { Vector2 } from "../common/utils";
+import Particles from "./Particles";
 
 export type SpineData = {
     skeleton: string;
@@ -18,11 +19,15 @@ export default class FlappyPlane extends Container {
     private spine: Spine;
     private speed: number;
     private startPos: Vector2;
+    private particles: Particles;
+    private isFlapping: boolean = false;
 
-    constructor(spineData: SpineData) {
+    constructor(spineData: SpineData, particles: Particles) {
         super();
         this.spine = Spine.from(spineData);
+        this.particles = particles;
         this.speed = 0;
+        this.pivot.set(this.width / 2, this.height / 2);
         
         this.setup();
     }
@@ -45,6 +50,11 @@ export default class FlappyPlane extends Container {
         this.spine.state.addAnimation(0, "side", true, config.plane.animationSwitch);
 
         this.speed = config.plane.initialJumpSeed;
+        this.isFlapping = true;
+
+        await delay(config.plane.flapLength);
+
+        this.isFlapping = false;
     }
 
     public update(deltaTime: number, speedMultiplier: number) {
@@ -59,6 +69,10 @@ export default class FlappyPlane extends Container {
 
         if (this.position.y == bottomPos) this.speed = 0;
         this.angle = lerp(this.angle, gsap.utils.mapRange(maxSpeed, minSpeed, upAngle, downAngle, this.speed), smoothing * deltaTime);
+
+        if (this.isFlapping) {
+            this.particles.create(new Vector2(this.x, this.y), speedMultiplier);
+        }
     }
 
     /**
