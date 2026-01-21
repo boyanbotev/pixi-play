@@ -21,6 +21,7 @@ export default class FlappyPlane extends Container {
     private startPos: Vector2;
     private particles: Particles;
     private isFlapping: boolean = false;
+    private rotationTl: gsap.core.Timeline;
 
     constructor(spineData: SpineData, particles: Particles) {
         super();
@@ -46,20 +47,21 @@ export default class FlappyPlane extends Container {
     }
 
     public async flap() {
-        this.spine.state.setAnimation(0, "up", true);
-        this.spine.state.addAnimation(0, "side", true, config.plane.animationSwitch);
+        const { plane: { initialJumpSeed, flapLength, animationSwitch } } = config;
 
-        this.speed = config.plane.initialJumpSeed;
+        this.spine.state.setAnimation(0, "up", true);
+        this.spine.state.addAnimation(0, "side", true, animationSwitch);
+        this.rotate();
+
+        this.speed = initialJumpSeed;
         this.isFlapping = true;
 
-        await delay(config.plane.flapLength);
+        await delay(flapLength);
 
         this.isFlapping = false;
     }
 
     public update(deltaTime: number, speedMultiplier: number) {
-        const { plane: { rotation: { maxSpeed, minSpeed, upAngle, downAngle, smoothing } } } = config;
-
         this.position.y -= this.speed * speedMultiplier * deltaTime;
         this.speed -= config.plane.gravity * speedMultiplier * deltaTime;
 
@@ -67,8 +69,11 @@ export default class FlappyPlane extends Container {
         const bottomPos = Manager.Height -config.plane.bottomPadding
         this.position.y = clamp(this.position.y, topPos, bottomPos);
 
-        if (this.position.y == bottomPos) this.speed = 0;
-        this.angle = lerp(this.angle, gsap.utils.mapRange(maxSpeed, minSpeed, upAngle, downAngle, this.speed), smoothing * deltaTime);
+        if (this.position.y == bottomPos) {
+            this.speed = 0;
+            this.rotationTl?.kill();
+            this.angle = 0;
+        }
 
         if (this.isFlapping) {
             this.particles.create(new Vector2(this.x, this.y), speedMultiplier);
@@ -126,6 +131,15 @@ export default class FlappyPlane extends Container {
         const { duration, ease } = config.plane.return;
         this.angle = 0;
         await gsap.to(this, { ...this.startPos, duration, ease });
+    }
+
+    private rotate() {
+        const { plane: { rotation: { up, down } } } = config;
+
+        if (this.rotationTl) this.rotationTl.kill();
+        this.rotationTl = gsap.timeline();
+        this.rotationTl.add(gsap.to(this, { ...up }));
+        this.rotationTl.add(gsap.to(this, { ...down }));
     }
 
     getAngleFacing(dir: Vector2) {

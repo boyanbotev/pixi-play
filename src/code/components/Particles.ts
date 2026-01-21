@@ -4,7 +4,7 @@ import gsap from "gsap";
 import { config } from "../common/config";
 
 export default class Particles extends Container {
-    create(position: Vector2, speedMultiplier: number) {;
+    create(position: Vector2, speedMultiplier: number) {
         const { particles: { offset: { x, y }, startAlpha, startScale } } = config;
 
         const particle = new Sprite(Assets.get("particle"));

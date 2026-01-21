@@ -10,11 +10,16 @@ export const config = {
         defaultMix: 0.3,
         animationSwitch: 0.5,
         rotation: {
-            maxSpeed: 100,
-            minSpeed: -100,
-            upAngle: -180,
-            downAngle: 180,
-            smoothing: 0.6,
+            up: {
+                angle: -30,
+                duration: 0.12,
+                ease: "power1.inOut",
+            },
+            down: {
+                angle: 30,
+                duration: 0.9,
+                ease: "power1.inOut",
+            }
         },
         scale: 0.6,
         spineData: {
