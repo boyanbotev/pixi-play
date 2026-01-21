@@ -102,7 +102,7 @@ export const config = {
     particles: {
         offset: {
             x: -30,
-            y: 20,
+            y: 25,
         },
         startAlpha:0.1,
         startScale: 0.8,
