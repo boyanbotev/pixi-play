@@ -76,8 +76,9 @@ export const config = {
         minScale: 0.8,
         maxScale: 1.2,
         yDifferentiation: 400,
+        collisionForgiveness: 20,
+        collisionDelay: 0.05,
         yAdjustments: [ -400, -400, -300, -200, -100, 0, 100, 200, 300, 300, 300, 300, 300],
-        collisionDistance: 150,
         fadeOut: {
             duration: 2,
             ease: "power4.inOut"
@@ -100,8 +101,8 @@ export const config = {
     },
     particles: {
         offset: {
-            x: -30, //was -30
-            y: -10, // was -10
+            x: -30,
+            y: 20,
         },
         startAlpha:0.1,
         startScale: 0.8,

@@ -44,14 +44,16 @@ export default class CloudController extends Container {
     async checkColliding() {
         if (this.paused) return;
 
-        await delay(0.1);
+        const { collisionForgiveness: f, collisionDelay } = config.obstacles;
+
+        await delay(collisionDelay);
         this.isColliding = this.clouds.filter(cloud =>  {
             var localPos = cloud.toLocal(this.player.position);
 
-            if (localPos.x > cloud.size().x / 2 || 
-                localPos.y > cloud.size().y / 2 || 
-                localPos.x < -cloud.size().x / 2|| 
-                localPos.y < -cloud.size().y / 2) {
+            if (localPos.x > (cloud.size().x / 2) - f || 
+                localPos.y > (cloud.size().y / 2) - f ||
+                localPos.x < -(cloud.size().x / 2) + f ||
+                localPos.y < -(cloud.size().y / 2) + f) {
                 return false;
             }
             return true;
