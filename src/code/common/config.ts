@@ -1,6 +1,6 @@
 export const config = {
-    speedMultiplier: 1.25,
-    increaseAmount: 0.00019,
+    speedMultiplier: 1,
+    increaseAmount: 0.0003,
     plane: {
         flapLength: 0.25,
         initialJumpSeed: 20,
@@ -109,6 +109,7 @@ export const config = {
             tint: 0xFF5500,
             duration: 0.4,
             baseSpeed: 300,
-        }
+        },
+        emitInterval: 0.5,
     }
 }

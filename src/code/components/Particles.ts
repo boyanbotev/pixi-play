@@ -4,6 +4,16 @@ import gsap from "gsap";
 import { config } from "../common/config";
 
 export default class Particles extends Container {
+    emitTimer: number = 0;
+
+    update(position: Vector2, deltaTime: number, speedMultiplier: number) {
+        this.emitTimer += deltaTime;
+        if (this.emitTimer > config.particles.emitInterval) {
+            this.emitTimer = 0;
+            this.create(position, speedMultiplier);
+        }
+    }
+
     create(position: Vector2, speedMultiplier: number) {
         const { particles: { offset: { x, y }, startAlpha, startScale } } = config;
 
@@ -22,7 +32,15 @@ export default class Particles extends Container {
 
     async animate(particle: Sprite, position: Vector2, speedMultiplier: number) {
         const { particles: { tween: { tint, duration, baseSpeed } } } = config;
-        await gsap.to(particle, { alpha: 0, tint, x: position.x - speedMultiplier * baseSpeed, duration });
+        await gsap.to(
+            particle, 
+            { 
+                alpha: 0, 
+                tint, 
+                x: position.x - speedMultiplier * baseSpeed, 
+                duration 
+            }
+        );
         particle.destroy();
     }
 }

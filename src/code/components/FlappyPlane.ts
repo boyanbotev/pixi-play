@@ -18,6 +18,7 @@ gsap.registerPlugin(MotionPathPlugin)
 export default class FlappyPlane extends Container {
     private spine: Spine;
     private speed: number;
+    private speedMultiplier: number = config.speedMultiplier;
     private startPos: Vector2;
     private particles: Particles;
     private isFlapping: boolean = false;
@@ -56,12 +57,13 @@ export default class FlappyPlane extends Container {
         this.speed = initialJumpSeed;
         this.isFlapping = true;
 
-        await delay(flapLength);
+        await delay(flapLength / this.speedMultiplier);
 
         this.isFlapping = false;
     }
 
     public update(deltaTime: number, speedMultiplier: number) {
+        this.speedMultiplier = speedMultiplier;
         this.position.y -= this.speed * speedMultiplier * deltaTime;
         this.speed -= config.plane.gravity * speedMultiplier * deltaTime;
 
@@ -76,7 +78,7 @@ export default class FlappyPlane extends Container {
         }
 
         if (this.isFlapping) {
-            this.particles.create(new Vector2(this.x, this.y), speedMultiplier);
+            this.particles.update(new Vector2(this.x, this.y), deltaTime, speedMultiplier);
         }
     }
 
@@ -138,6 +140,7 @@ export default class FlappyPlane extends Container {
 
         if (this.rotationTl) this.rotationTl.kill();
         this.rotationTl = gsap.timeline();
+        this.rotationTl.timeScale(this.speedMultiplier);
         this.rotationTl.add(gsap.to(this, { ...up }));
         this.rotationTl.add(gsap.to(this, { ...down }));
     }
