@@ -13,7 +13,7 @@ export default class CloudController extends Container {
 
     constructor(player: Container) {
         super();
-        this.speedMultiplier = 1;
+        this.speedMultiplier = config.speedMultiplier;
         this.player = player;
         this.clouds = []
         this.paused = true;
@@ -27,6 +27,7 @@ export default class CloudController extends Container {
     public resume() {
         this.paused = false;
         this.isColliding = false;
+        this.speedMultiplier = config.speedMultiplier;
         this.spawn();
         this.checkColliding();
     }
