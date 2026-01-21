@@ -69,7 +69,7 @@ export const config = {
         },
         minAnimation: 1,
         animations: 7,
-        tint: 0x2f2627,
+        tint: 0x2a2a2a,
         delays: {
             beforeFadeOut: 1,
         },
