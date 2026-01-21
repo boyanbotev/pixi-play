@@ -62,7 +62,8 @@ export class GameScene extends Container implements IScene {
         this.isGameActive = true;
         this.speedMultiplier = config.speedMultiplier;
         this.clouds.resume();
-        this.controller.addListeners();
+        this.player.flap();
+        delay(0.05).then(() => this.controller.addListeners());
     }
 
     public update(delta: number): void {
