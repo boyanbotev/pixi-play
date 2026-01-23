@@ -83,6 +83,16 @@ export const config = {
             duration: 2,
             ease: "power4.inOut"
         },
+        screenShake: {
+            startDuration: 0,
+            endDuration: 0.2,
+            itemDuration: 0.06,
+            intensity: 5,
+            repeat: 10,
+            itemEase: "none",
+            startEase: "power1.out",
+            endEase: "power1.in",
+        }
     },
     bg: {
         repeatWidth: -1498,

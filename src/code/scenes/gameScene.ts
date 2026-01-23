@@ -9,12 +9,14 @@ import ScrollingBackground from "../components/ScrollingBackground";
 import { Vector2, delay } from "../common/utils";
 import Button from "../components/Button";
 import Particles from "../components/Particles";
+import CameraShake from "../components/CameraShake";
 
 export class GameScene extends Container implements IScene {
     private controller: Controller;
     private clouds: CloudController;
     private bg: ScrollingBackground;
     private player: FlappyPlane;
+    private shake: CameraShake;
     private isGameActive: boolean = false;
     private speedMultiplier: number;
 
@@ -34,6 +36,7 @@ export class GameScene extends Container implements IScene {
         this.controller = new Controller(this.player);
         this.clouds = new CloudController(this.player);
         this.bg = new ScrollingBackground();
+        this.shake = new CameraShake(this);
 
         this.speedMultiplier = config.speedMultiplier;
 
@@ -86,6 +89,7 @@ export class GameScene extends Container implements IScene {
 
     private async loseSequence() {
         await Promise.all([
+            this.shake.shake(config.obstacles.screenShake),
             this.player.crash().then(() => this.player.return()),
             delay(config.obstacles.delays.beforeFadeOut).then(() => this.clouds.fadeOut()),
         ]);
