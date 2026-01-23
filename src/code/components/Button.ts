@@ -18,7 +18,6 @@ export default class Button extends Container {
 
     private animate() {
         const { width, height } = this;
-        // squash and stretch
         this.tween = gsap.to(this, { height: height * 1.05, width: width * 1.05, ease: "power1.inOut", duration: 1, repeat: -1 }).yoyo(true);
 
     }

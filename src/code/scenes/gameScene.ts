@@ -1,4 +1,4 @@
-import { Container, Assets } from "pixi.js";
+import { Container, Assets, Texture } from "pixi.js";
 import { IScene } from "../common/IScene";
 import { Manager } from "../common/Manager";
 import { Controller } from "../components/Controller";
@@ -26,11 +26,6 @@ export class GameScene extends Container implements IScene {
     }
 
     private async createGame(): Promise<void> { 
-        const assetsBundle = await Assets.loadBundle("assetsBundle");
-        if (!assetsBundle) {
-            throw new Error("Bundle not loaded");
-        }
-
         const flappyPlaneParticles = new Particles();
         this.player = new FlappyPlane(config.plane.spineData, flappyPlaneParticles);
         this.controller = new Controller(this.player);
@@ -53,7 +48,7 @@ export class GameScene extends Container implements IScene {
 
     private createStartButton() {
         const { width, height } = config.startButton;
-        const startButton = new Button(Assets.get("startButton"), width, height, () => {
+        const startButton = new Button(Assets.get("start.png"), width, height, () => {
             startButton.destroy();
             this.reset();
         });

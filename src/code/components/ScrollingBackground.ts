@@ -17,7 +17,7 @@ export default class ScrollingBackground extends Container {
     }
 
     private setup(){
-        const bg = new Sprite(Assets.get("bg"));
+        const bg = new Sprite(Assets.get("bg.png"));
         bg.height = Manager.Height;
         bg.width = Manager.Width * 2;
         this.addChild(bg);

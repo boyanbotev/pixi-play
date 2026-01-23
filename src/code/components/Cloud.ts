@@ -25,6 +25,7 @@ export default class Cloud extends Container {
         this.spine.tint = tint;
         this.scale.set(getRandomFloat(minScale, maxScale));
         this.position.y += yAdjustments[getRandomInt(0, yAdjustments.length - 1)];
+        this.interactiveChildren = false;
     }
 
     destroy() {

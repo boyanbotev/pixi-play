@@ -5,6 +5,10 @@ import { config } from "../common/config";
 
 export default class Particles extends Container {
     emitTimer: number = 0;
+    constructor() {
+        super();
+        this.interactiveChildren = false;
+    }
 
     update(position: Vector2, deltaTime: number, speedMultiplier: number) {
         this.emitTimer += deltaTime;
@@ -17,7 +21,7 @@ export default class Particles extends Container {
     create(position: Vector2, speedMultiplier: number) {
         const { particles: { offset: { x, y }, startAlpha, startScale } } = config;
 
-        const particle = new Sprite(Assets.get("particle"));
+        const particle = new Sprite(Assets.get("particle.png"));
 
         particle.blendMode = BLEND_MODES.ADD;
         particle.position.set(position.x + x, position.y + y);
